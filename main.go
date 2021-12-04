@@ -15,7 +15,7 @@ import (
 
 const (
 	OriginalFilenameListFileExt = ".orfn"
-	ShortNameWidth              = 60
+	ShortNameWidth              = 50
 )
 
 var (
