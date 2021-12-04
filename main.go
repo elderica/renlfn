@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"hash/fnv"
+	"io"
 	"io/fs"
 	"log"
 	"os"
@@ -88,8 +89,9 @@ func dirwalker(path string, d fs.DirEntry, err error) error {
 
 // makenewpath はファイルやディレクトリの新しい名前を生成する。
 func makenewpath(path string) string {
-	hs := fnv.New128()
-	hv := hs.Sum([]byte(path))
+	hs := fnv.New64()
+	io.WriteString(hs, path)
+	hv := hs.Sum(nil)
 
 	ext := filepath.Ext(path)
 	newname := fmt.Sprintf("%x%s", hv, ext)
