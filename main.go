@@ -97,6 +97,11 @@ func dirwalker(path string, d fs.DirEntry, err error) error {
 		return nil
 	}
 
+	// ディレクトリをスキップする
+	if d.IsDir() {
+		return nil
+	}
+
 	newpath := makenewpath(path)
 	fmt.Fprintln(orfnfile, path, newpath)
 
