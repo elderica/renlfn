@@ -9,10 +9,13 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+
+	"github.com/mattn/go-runewidth"
 )
 
 const (
 	OriginalFilenameListFileExt = ".orfn"
+	ShortNameWidth              = 60
 )
 
 var (
@@ -76,7 +79,12 @@ func startwalk() {
 // dirwalker はリネーム処理を行なう。
 // dirwalker: io/fs.WalkDirFunc
 func dirwalker(path string, d fs.DirEntry, err error) error {
-	// 対象ディレクトリそのものは飛ばす
+	// StatもしくはReadDirに失敗するようなら飛ばす
+	if err != nil {
+		return fs.SkipDir
+	}
+
+	// 対象ディレクトリそのものはリネームしない
 	if path == flagdir {
 		return nil
 	}
@@ -93,10 +101,14 @@ func makenewpath(path string) string {
 	io.WriteString(hs, path)
 	hv := hs.Sum(nil)
 
+	base := filepath.Base(path)
 	ext := filepath.Ext(path)
-	newname := fmt.Sprintf("%x%s", hv, ext)
+	basewithoutext := base[:len(base)-len(ext)]
+	newbasewithoutext := runewidth.Truncate(basewithoutext, ShortNameWidth, "")
+
+	newbase := fmt.Sprintf("%s_%x%s", newbasewithoutext, hv, ext)
 	dir := filepath.Dir(path)
-	newpath := filepath.Join(dir, newname)
+	newpath := filepath.Join(dir, newbase)
 
 	return newpath
 }
