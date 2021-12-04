@@ -10,12 +10,13 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/mattn/go-runewidth"
+	"github.com/rivo/uniseg"
 )
 
 const (
 	OriginalFilenameListFileExt = ".orfn"
-	ShortNameWidth              = 50
+	ShortNameBytesLength        = 204
+	NAMEMAX                     = 255
 )
 
 var (
@@ -104,11 +105,27 @@ func makenewpath(path string) string {
 	base := filepath.Base(path)
 	ext := filepath.Ext(path)
 	basewithoutext := base[:len(base)-len(ext)]
-	newbasewithoutext := runewidth.Truncate(basewithoutext, ShortNameWidth, "")
+	newbasewithoutext := TruncateBase(basewithoutext)
 
 	newbase := fmt.Sprintf("%s_%x%s", newbasewithoutext, hv, ext)
 	dir := filepath.Dir(path)
 	newpath := filepath.Join(dir, newbase)
 
 	return newpath
+}
+
+func TruncateBase(a string) string {
+	grs := uniseg.NewGraphemes(a)
+	newa := make([]byte, 0, NAMEMAX)
+
+	for grs.Next() {
+		bs := grs.Bytes()
+		newlen := len(newa) + len(bs)
+		if newlen > ShortNameBytesLength {
+			break
+		}
+		newa = append(newa, bs...)
+	}
+
+	return string(newa)
 }
