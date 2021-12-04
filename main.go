@@ -20,7 +20,8 @@ const (
 )
 
 var (
-	flagdir string
+	flagdir        string
+	flagrenamethem bool
 
 	orfnfilepath string
 	orfnfile     *os.File
@@ -28,6 +29,7 @@ var (
 
 func init() {
 	flag.StringVar(&flagdir, "dir", "", "対象とするディレクトリ")
+	flag.BoolVar(&flagrenamethem, "renamethem", false, "実際にリネームする")
 }
 
 func processflagdir() {
@@ -53,10 +55,15 @@ func processflagdir() {
 	log.Println("オリジナルファイル名をここに格納する:", orfnfilepath)
 }
 
+func processflagrenamethem() {
+	log.Println("実際にリネームを実施する？:", flagrenamethem)
+}
+
 func processflags() {
 	flag.Parse()
 
 	processflagdir()
+	processflagrenamethem()
 }
 
 func main() {
@@ -92,6 +99,14 @@ func dirwalker(path string, d fs.DirEntry, err error) error {
 
 	newpath := makenewpath(path)
 	fmt.Fprintln(orfnfile, path, newpath)
+
+	if flagrenamethem {
+		err := os.Rename(path, newpath)
+		if err != nil {
+			log.Println("rename:", err)
+			return err
+		}
+	}
 
 	return nil
 }
