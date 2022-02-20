@@ -51,8 +51,8 @@ mkcd "$basedir"
 cd "$bindir"
 find "$basedir"
 echo --------------------------------------------------------------------
-go run . -dir "$basedir" -depth 3
+go run github.com/elderica/renlfn/bin/renlfn -dir "$basedir" -depth 3
 echo --------------------------------------------------------------------
-go run . -dir "$basedir" -depth 3 -actual
+go run github.com/elderica/renlfn/bin/renlfn -dir "$basedir" -depth 3 -actual
 echo --------------------------------------------------------------------
 find "$basedir"
