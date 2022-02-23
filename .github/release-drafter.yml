@@ -1,8 +1,63 @@
+# ref: https://zenn.dev/kounoike/articles/20220211-easy-generate-release-notes
+# ref: https://github.com/ts-live/ts-live/blob/main/.github/release-drafter.yml
 name-template: 'v$RESOLVED_VERSION'
 tag-template: 'v$RESOLVED_VERSION'
+
 template: |
   ## Changes
+
   $CHANGES
+
+categories:
+  - title: '🚀 Features'
+    labels:
+      - 'feature'
+  - title: '💪 Enhancement'
+    labels:
+      - 'enhancement'
+  - title: '🐛 Bug Fixes'
+    labels:
+      - 'fix'
+      - 'bugfix'
+      - 'bug'
+  - title: '🧰 Maintenance'
+    label: 'chore'
+  - title: '🔧 Refactoring'
+    label: 'refactor'
+  - title: '📖 Documentation'
+    label: 'documentation'
+  - title: '⛓️ Dependency update'
+    label: 'dependencies'
+
+
+  autolabeler:
+  - label: feature
+    branch:
+      - '/^feat(ure)?[/-].+/'
+  - label: bug
+    branch:
+      - '/^fix[/-].+/'
+  - label: chore
+    branch:
+      - '/^chore[/-].+/'
+  - label: refactor
+    branch:
+      - '/(refactor|refactoring)[/-].+/'
+  - label: documentation
+    branch:
+      - '/doc(umentation)?[/-].+/'
+    files:
+      - '*.md'
+  - label: enhancement
+    branch:
+      - '/(enhancement|improve)[/-].+/'
+  - label: dependencies
+    branch:
+      - '/dep(endencies)?[/-].+/'
+  - label: github
+    files:
+      - '.github/**/*'
+
 version-resolver:
   major:
     labels:
