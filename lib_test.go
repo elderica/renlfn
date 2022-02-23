@@ -4,14 +4,14 @@ import "testing"
 
 func TestMakeTruncatedPath(t *testing.T) {
 	from1 := "/tmp/renlfn/いろは/にほへと/ちりぬるを/ああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ.mkv"
-	to1 := "/tmp/renlfn/いろは/にほへと/ちりぬるを/0d0f797bあああああああああああああああああああああああああああああああああああああああああああああああああ.mkv"
+	to1 := "/tmp/renlfn/いろは/にほへと/ちりぬるを/あああああああああああああああああああああああああああああああああああああああああああああああああ0d0f797b.mkv"
 	actual1 := TruncatePath(from1, 49)
 	if to1 != actual1 {
 		t.Errorf("MakeTruncatedPath(from) = \"%s\"; want \"%s\"", actual1, to1)
 	}
 
 	from2 := "にほへと/ちりぬるを/ああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ.mkv"
-	to2 := "にほへと/ちりぬるを/0d0f797bあああああああああああああああああああああああああああああああああああああああああああああああああ.mkv"
+	to2 := "にほへと/ちりぬるを/あああああああああああああああああああああああああああああああああああああああああああああああああ0d0f797b.mkv"
 	actual2 := TruncatePath(from2, 49)
 	if to1 != actual1 {
 		t.Errorf("MakeTruncatedPath(from) = \"%s\"; want \"%s\"", actual2, to2)
