@@ -1,6 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
+renlfn="go run github.com/elderica/renlfn/bin/renlfn"
 bindir="$(pwd)"
 basedir="/tmp/renlfn"
 rm -r -f "$basedir"
@@ -51,8 +52,8 @@ mkcd "$basedir"
 cd "$bindir"
 find "$basedir"
 echo --------------------------------------------------------------------
-go run github.com/elderica/renlfn/bin/renlfn -dir "$basedir" -depth 3
+$renlfn -dir "$basedir" -depth 8 -length 10 -leavedirs
 echo --------------------------------------------------------------------
-go run github.com/elderica/renlfn/bin/renlfn -dir "$basedir" -depth 3 -actual
+$renlfn -dir "$basedir" -actual -depth 8 -length 10 -leavedirs
 echo --------------------------------------------------------------------
 find "$basedir"

@@ -10,10 +10,11 @@ import (
 )
 
 var (
-	flagdir    string
-	flagactual bool
-	flagdepth  int
-	flaglength int
+	flagdir       string
+	flagactual    bool
+	flagdepth     int
+	flaglength    int
+	flagleavedirs bool
 
 	config renlfn.Config
 )
@@ -23,6 +24,7 @@ func init() {
 	flag.BoolVar(&flagactual, "actual", false, "実際にリネームする")
 	flag.IntVar(&flagdepth, "depth", 4, "対象となる深さ")
 	flag.IntVar(&flaglength, "length", 50, "新しい基底名の長さ(日本語で63文字まで)")
+	flag.BoolVar(&flagleavedirs, "leavedirs", false, "ディレクトリをリネームしない")
 }
 
 func processflags() {
@@ -62,6 +64,7 @@ func main() {
 	config.Actual = flagactual
 	config.Depth = uint(flagdepth)
 	config.Length = uint(flaglength)
+	config.LeaveDirs = flagleavedirs
 
 	renlfn.RealMain(config)
 }

@@ -56,6 +56,10 @@ func RenameRec(config Config, dir string, depth uint) {
 		if dentry.IsDir() {
 			RenameRec(config, path, depth-1)
 		}
+		if config.LeaveDirs && dentry.Type().IsDir() {
+			log.Printf("ディレクトリであるため変更しない:%s", path)
+			continue
+		}
 		newpath := TruncatePath(path, config.Length)
 		log.Printf("旧:%s 新:%s", path, newpath)
 		if config.Actual {
@@ -67,10 +71,11 @@ func RenameRec(config Config, dir string, depth uint) {
 }
 
 type Config struct {
-	Dir    string
-	Actual bool
-	Depth  uint
-	Length uint
+	Dir       string
+	Actual    bool
+	Depth     uint
+	Length    uint
+	LeaveDirs bool
 }
 
 func RealMain(config Config) {
