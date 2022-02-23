@@ -18,6 +18,15 @@ func TestMakeTruncatedPath(t *testing.T) {
 	}
 }
 
+func TestWhitespaceIncluded(t *testing.T) {
+	from1 := "/tmp/renlfn/いろは/にほへと/ちりぬるを/　あいうえお　かきくけこ.mkv"
+	to1 := "/tmp/renlfn/いろは/にほへと/ちりぬるを/あいうえお29f9cf39.mkv"
+	actual1 := TruncatePath(from1, 6)
+	if to1 != actual1 {
+		t.Errorf("MakeTruncatedPath(from) = \"%s\"; want \"%s\"", actual1, to1)
+	}
+}
+
 func TestTruncatedString(t *testing.T) {
 	from := "【重要】💕私はその人を常に先生と呼んでいた🥰"
 	to := "【重要】💕私はその人を常に先生と"

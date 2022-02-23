@@ -26,8 +26,9 @@ func TruncatePath(path string, newbasenamelen uint) string {
 	ext := filepath.Ext(path)
 	basename := base[:len(base)-len(ext)]
 	truncatedBasename := TruncateString(basename, newbasenamelen)
+	trimedTruncatedBasename := strings.TrimSpace(truncatedBasename)
 	dir := filepath.Dir(path)
-	return filepath.Join(dir, truncatedBasename+cksum+ext)
+	return filepath.Join(dir, trimedTruncatedBasename+cksum+ext)
 }
 
 func TruncateString(s string, len uint) string {
