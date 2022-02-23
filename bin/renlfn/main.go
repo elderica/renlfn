@@ -22,7 +22,7 @@ func init() {
 	flag.StringVar(&flagdir, "dir", "", "対象とするディレクトリ")
 	flag.BoolVar(&flagactual, "actual", false, "実際にリネームする")
 	flag.IntVar(&flagdepth, "depth", 2, "対象となる深さ")
-	flag.IntVar(&flaglength, "length", 32, "新しい基底名の長さ(日本語で63文字まで)")
+	flag.IntVar(&flaglength, "length", 50, "新しい基底名の長さ(日本語で63文字まで)")
 }
 
 func processflags() {
