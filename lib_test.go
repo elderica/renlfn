@@ -2,7 +2,7 @@ package renlfn
 
 import "testing"
 
-func TestMakeTruncatedPath(t *testing.T) {
+func TestTruncatePath(t *testing.T) {
 	from1 := "/tmp/renlfn/いろは/にほへと/ちりぬるを/ああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ.mkv"
 	to1 := "/tmp/renlfn/いろは/にほへと/ちりぬるを/あああああああああああああああああああああああああああああああああああああああああああああああああ0d0f797b.mkv"
 	actual1 := TruncatePath(from1, 49)
