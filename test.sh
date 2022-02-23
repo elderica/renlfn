@@ -3,7 +3,7 @@ set -euo pipefail
 
 bindir="$(pwd)"
 basedir="/tmp/renlfn"
-rm -r "$basedir"
+rm -r -f "$basedir"
 
 rep() {
 	s="${1:-あ}"
