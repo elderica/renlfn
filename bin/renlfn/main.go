@@ -62,6 +62,10 @@ func main() {
 		log.Fatal("基底名の長さが63文字を越えています。")
 	}
 
+	if flagdepth <= 0 {
+		log.Fatal("対象となる深さは1以上にしてください")
+	}
+
 	config.Dir = abspath
 	config.Actual = flagactual
 	config.Depth = uint(flagdepth)
