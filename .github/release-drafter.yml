@@ -1,5 +1,6 @@
 # ref: https://zenn.dev/kounoike/articles/20220211-easy-generate-release-notes
 # ref: https://github.com/ts-live/ts-live/blob/main/.github/release-drafter.yml
+---
 name-template: 'v$RESOLVED_VERSION'
 tag-template: 'v$RESOLVED_VERSION'
 
@@ -30,7 +31,7 @@ categories:
     label: 'dependencies'
 
 
-  autolabeler:
+autolabeler:
   - label: feature
     branch:
       - '/^feat(ure)?[/-].+/'
