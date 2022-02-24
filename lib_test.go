@@ -35,3 +35,12 @@ func TestTruncatedString(t *testing.T) {
 		t.Errorf("MakeTruncatedString(\"%s\") = \"%s\"; want \"%s\"", from, actual, to)
 	}
 }
+
+func TestBasenameLength(t *testing.T) {
+	path := "/tmp/renlfn/いろは/にほへと/ちりぬるを/🗻で撮られた衝撃の映像😮.mkv"
+	expected := uint(12)
+	actual := BasenameLength(path)
+	if actual != expected {
+		t.Errorf("BasenameLength(from) = %d; want %d", actual, expected)
+	}
+}

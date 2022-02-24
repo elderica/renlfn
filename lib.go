@@ -43,6 +43,14 @@ func TruncateString(s string, len uint) string {
 	return r
 }
 
+// BasenameLength は基底名の長さを計算します。
+func BasenameLength(path string) uint {
+	base := filepath.Base(path)
+	ext := filepath.Ext(path)
+	basename := base[:len(base)-len(ext)]
+	return uint(uniseg.GraphemeClusterCount(basename))
+}
+
 func RenameRec(config Config, dir string, depth uint) {
 	if depth <= 0 {
 		return
@@ -60,6 +68,11 @@ func RenameRec(config Config, dir string, depth uint) {
 			log.Printf("ディレクトリであるため変更しない:%s", path)
 			continue
 		}
+		if BasenameLength(path) <= config.LeaveLength {
+			log.Printf("短い基底名であるため変更しません:%s", path)
+			continue
+		}
+
 		newpath := TruncatePath(path, config.Length)
 		log.Printf("旧:%s 新:%s", path, newpath)
 		if config.Actual {
@@ -71,11 +84,12 @@ func RenameRec(config Config, dir string, depth uint) {
 }
 
 type Config struct {
-	Dir       string
-	Actual    bool
-	Depth     uint
-	Length    uint
-	LeaveDirs bool
+	Dir         string
+	Actual      bool
+	Depth       uint
+	Length      uint
+	LeaveDirs   bool
+	LeaveLength uint
 }
 
 func RealMain(config Config) {
